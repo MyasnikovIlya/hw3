@@ -1,21 +1,9 @@
 https://query.wikidata.org/#SELECT%20%3Fwifu%20%3FwifuLabel%0AWHERE%20%7B%0A%20%20%7B%0A%20%20%20%20SELECT%20%3Fwifu%20%0A%20%20%20%20%20%20%20%20%20%20%20WHERE%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20SELECT%20%3Fdirector%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20WHERE%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ffilm%20wdt%3AP57%20%3Fdirector%20FILTER%28%3Ffilm%20%3D%20wd%3AQ189505%29%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%3Fwifu%20wdt%3AP26%20%20%3Fdirector%20.%0A%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%7D%0A%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22%20.%20%7D%0A%7D%0A%0A%0A%0A%20%20
 Так как у моего фильма (Подозрительные лица) бисексуальный режесер у которого нет данных о паре в Википедии, для демонстрации корректной работы запроса использовал фильм Челюсти
 Дублирую сам запрос раз уж ответ в виде файла
-SELECT ?wifu ?wifuLabel
-WHERE {
-  {
-    SELECT ?wifu 
-           WHERE {
-             {
-               SELECT ?director
-                      WHERE
-                      {
-                        ?film wdt:P57 ?director FILTER(?film = wd:Q189505) .
-                      }
-             } 
-             ?wifu wdt:P26  ?director .
-           }
-  }
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+SELECT ?wifu ?wifuLabel ?date WHERE {
+  ?film wdt:P57 ?director FILTER(?film = wd:Q167726).
+  ?wifu (wdt:P26|wdt:P451) ?director;
+                           wdt:P569 ?date.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
